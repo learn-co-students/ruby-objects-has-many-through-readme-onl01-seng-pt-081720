@@ -1,4 +1,5 @@
 class Customer
+    attr_accessor :name, :age
     
     
     @@all = []
@@ -13,8 +14,18 @@ class Customer
         @@all
     end
 
-    def new_meal(waiter,total,tip)
-        waiter = Waiter.new(name,exp)
-
+    def new_meal(waiter,total,tip=0)
+        Meal.new(self,waiter,total,tip)
     end
+
+    def meals
+        Meal.all.select do |meal|
+          meal.customer == self
+        end
+      end
+
+    def waiters
+        meals.map {|meal| meal.waiter}
+    end
+
 end
